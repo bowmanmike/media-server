@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy dependency metadata first for cache
 COPY pyproject.toml ./
 
+COPY uv.lock ./
+
 # Install deps into /app/.venv (no project code yet)
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --no-dev --frozen --no-install-project || uv sync --no-dev
