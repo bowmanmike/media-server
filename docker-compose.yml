@@ -8,7 +8,7 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/jellyfin:/config
-      - /media/storage/media:/media
+      - /media/storage:/media
     ports:
       - "8096:8096"
     restart: unless-stopped
