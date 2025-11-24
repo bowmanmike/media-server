@@ -1,0 +1,12 @@
+.env
+.env.local
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Docker
+*.log

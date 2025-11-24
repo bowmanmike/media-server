@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+    volumes:
+      - /media/storage/config/jellyfin:/config
+      - /media/storage/media:/media
+    ports:
+      - "8096:8096"
+    restart: unless-stopped
+
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+    volumes:
+      - /media/storage/config/transmission:/config
+      - /media/storage/downloads:/downloads
+      - /media/storage/watch:/watch
+    ports:
+      - "9091:9091"
+      - "51413:51413"
+      - "51413:51413/udp"
+    restart: unless-stopped
+
+  organizer:
+    image: ghcr.io/bowmanmike/media-organizer:latest
+    container_name: media-organizer
+    environment:
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - DOWNLOADS_DIR=/downloads/complete
+      - MOVIES_DIR=/media/movies
+      - TV_DIR=/media/tv
+      - SLEEP_SECONDS=300
+    volumes:
+      - /media/storage/downloads:/downloads
+      - /media/storage/media:/media
+    restart: unless-stopped
