@@ -33,4 +33,5 @@ ENV MOVIES_DIR=/media/movies
 ENV TV_DIR=/media/tv
 ENV SLEEP_SECONDS=300
 
-CMD ["organize-media"]
+# Run the script directly instead of using a console entrypoint
+CMD ["python", "organize_media.py"]
