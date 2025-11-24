@@ -20,6 +20,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Toronto
+      - TRANSMISSION_SCRIPT_TORRENT_DONE_ENABLED=true
+      - TRANSMISSION_SCRIPT_TORRENT_DONE_FILENAME=/config/transmission-on-complete.sh
     volumes:
       - /home/mike/.config/transmission:/config
       - /media/storage/downloads:/downloads

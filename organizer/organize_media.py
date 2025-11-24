@@ -189,13 +189,22 @@ def sweep_once() -> None:
 
 
 def main() -> None:
-  logging.info("Starting media organizer. Downloads=%s", DOWNLOADS_DIR)
-  if not TMDB_API_KEY:
-    logging.warning("TMDB_API_KEY not set; using filename info only.")
+    import sys
 
-  while True:
-    sweep_once()
-    time.sleep(SLEEP_SECONDS)
+    run_once = "--once" in sys.argv
+
+    logging.info("Organizer starting. run_once=%s downloads_dir=%s", run_once, DOWNLOADS_DIR)
+
+    if not TMDB_API_KEY:
+        logging.warning("TMDB_API_KEY not set; using filename info only.")
+
+    if run_once:
+        sweep_once()
+        return
+
+    while True:
+        sweep_once()
+        time.sleep(SLEEP_SECONDS)
 
 
 if __name__ == "__main__":
