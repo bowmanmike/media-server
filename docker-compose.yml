@@ -36,8 +36,8 @@ services:
     environment:
       - TMDB_API_KEY=${TMDB_API_KEY}
       - DOWNLOADS_DIR=/downloads/complete
-      - MOVIES_DIR=/media/movies
-      - TV_DIR=/media/tv
+      - MOVIES_DIR=/media/Movies
+      - TV_DIR=/media/TV
       - SLEEP_SECONDS=300
     volumes:
       - /media/storage/downloads:/downloads
