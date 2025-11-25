@@ -6,6 +6,8 @@ import json
 import logging
 from pathlib import Path
 from typing import Optional, Dict, Any
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import threading
 
 import requests
 from guessit import guessit
@@ -25,6 +27,29 @@ TMDB_BASE = "https://api.themoviedb.org/3"
 # Ignore tiny files (< ~50MB) – likely samples
 MIN_SIZE_BYTES = 50 * 1024 * 1024
 SLEEP_SECONDS = int(os.environ.get("SLEEP_SECONDS", "300"))  # 5 min default
+
+class TriggerHandler(BaseHTTPRequestHandler):
+    def do_POST(self):  # we’ll use POST /scan-once
+        if self.path == "/scan-once":
+            logging.info("HTTP trigger received: running sweep_once()")
+            try:
+                sweep_once()
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"OK")
+            except Exception as e:  # noqa: BLE001
+                logging.exception("Error in sweep_once() from HTTP trigger: %s", e)
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(b"ERROR")
+        else:
+            self.send_response(404)
+            self.end_headers()
+
+    def log_message(self, fmt, *args):
+        # Silence default HTTP request logging
+        return
+
 
 
 def tmdb_search_movie(title: str, year: Optional[int]) -> Optional[Dict[str, Any]]:
@@ -201,6 +226,11 @@ def main() -> None:
     if run_once:
         sweep_once()
         return
+
+      # Start HTTP trigger server in a background thread
+    server = HTTPServer(("0.0.0.0", 8000), TriggerHandler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    logging.info("HTTP trigger server listening on 0.0.0.0:8000")
 
     while True:
         sweep_once()

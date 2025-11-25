@@ -21,11 +21,12 @@ services:
       - PGID=1000
       - TZ=America/Toronto
       - TRANSMISSION_SCRIPT_TORRENT_DONE_ENABLED=true
-      - TRANSMISSION_SCRIPT_TORRENT_DONE_FILENAME=/config/transmission-on-complete.sh
+      - TRANSMISSION_SCRIPT_TORRENT_DONE_FILENAME=/config/on-complete.sh
     volumes:
       - /home/mike/.config/transmission:/config
       - /media/storage/downloads:/downloads
       - /media/storage/watch:/watch
+      - ./transmission/on-complete.sh:/config/on-complete.sh:ro
     ports:
       - "9091:9091"
       - "51413:51413"

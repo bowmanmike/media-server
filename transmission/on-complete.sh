@@ -1,3 +1,3 @@
 #! /bin/bash
 
-/usr/bin/docker exec media-organizer python /app/organize_media.py --once
+curl -s -X POST http://organizer:8000/scan-once >/dev/null 2>&1
