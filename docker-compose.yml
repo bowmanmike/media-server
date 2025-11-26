@@ -43,5 +43,5 @@ services:
       - TV_DIR=/media/TV
     volumes:
       - /media/storage/downloads:/downloads
-      - /media/storage/media:/media
+      - /media/storage:/media
     restart: unless-stopped
