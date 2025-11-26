@@ -41,7 +41,6 @@ services:
       - DOWNLOADS_DIR=/downloads/complete
       - MOVIES_DIR=/media/Movies
       - TV_DIR=/media/TV
-      - SLEEP_SECONDS=300
     volumes:
       - /media/storage/downloads:/downloads
       - /media/storage/media:/media

@@ -25,7 +25,6 @@ TMDB_BASE = "https://api.themoviedb.org/3"
 
 # Ignore tiny files (< ~50MB) – likely samples
 MIN_SIZE_BYTES = 50 * 1024 * 1024
-SLEEP_SECONDS = int(os.environ.get("SLEEP_SECONDS", "300"))  # 5 min default
 
 class TriggerHandler(BaseHTTPRequestHandler):
     def do_POST(self):  # we’ll use POST /scan-once
