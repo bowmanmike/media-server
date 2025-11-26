@@ -42,7 +42,7 @@ services:
       - PGID=1000
       - TZ=America/Toronto
     volumes:
-      - /media/storage/config/sonarr:/config
+      - /home/mike/.config/sonarr:/config
       - /media/storage/TV:/tv                 # final TV library
       - /media/storage/downloads:/downloads   # where new stuff lands
     ports:
