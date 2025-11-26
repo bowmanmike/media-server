@@ -12,6 +12,8 @@ services:
     ports:
       - "8096:8096"
     restart: unless-stopped
+    networks:
+      - media
 
   transmission:
     image: lscr.io/linuxserver/transmission:latest
@@ -32,6 +34,8 @@ services:
       - "51413:51413"
       - "51413:51413/udp"
     restart: unless-stopped
+    networks:
+      - media
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
