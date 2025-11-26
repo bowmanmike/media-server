@@ -7,7 +7,6 @@ import logging
 from pathlib import Path
 from typing import Optional, Dict, Any
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import threading
 
 import requests
 from guessit import guessit
@@ -227,14 +226,11 @@ def main() -> None:
         sweep_once()
         return
 
-      # Start HTTP trigger server in a background thread
+    # Start HTTP trigger server in a background thread
     server = HTTPServer(("0.0.0.0", 8000), TriggerHandler)
-    threading.Thread(target=server.serve_forever, daemon=True).start()
     logging.info("HTTP trigger server listening on 0.0.0.0:8000")
 
-    while True:
-        sweep_once()
-        time.sleep(SLEEP_SECONDS)
+    server.serve_forever()
 
 
 if __name__ == "__main__":
