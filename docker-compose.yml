@@ -33,15 +33,23 @@ services:
       - "51413:51413/udp"
     restart: unless-stopped
 
-  organizer:
-    image: ghcr.io/bowmanmike/media-organizer:latest
-    container_name: media-organizer
-    environment:
-      - TMDB_API_KEY=${TMDB_API_KEY}
-      - DOWNLOADS_DIR=/downloads/complete
-      - MOVIES_DIR=/media/Movies
-      - TV_DIR=/media/TV
-    volumes:
-      - /media/storage/downloads:/downloads
-      - /media/storage:/media
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
     restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+    volumes:
+      - /media/storage/config/sonarr:/config
+      - /media/storage/TV:/tv                 # final TV library
+      - /media/storage/downloads:/downloads   # where new stuff lands
+    ports:
+      - "8989:8989"            # Sonarr web UI
+    networks:
+      - media
+
+networks:
+  media:
+    driver: bridge
