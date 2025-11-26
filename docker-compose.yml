@@ -69,6 +69,23 @@ services:
     networks:
       - media
 
+  rdtclient:
+    image: ghcr.io/rogerfar/rdtclient:latest
+    container_name: rdtclient
+    restart: unless-stopped
+    environment:
+      - RD_API_KEY=<YOUR_REAL_DEBRID_API_KEY>
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+    volumes:
+      - /media/storage/downloads:/downloads   # same as Transmission folder
+      - /home/mike/.config/rdtclient:/config
+    ports:
+      - "6500:6500"  # optional; web UI
+    networks:
+      - media
+
 networks:
   media:
     driver: bridge
