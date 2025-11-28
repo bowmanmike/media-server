@@ -8,7 +8,7 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/jellyfin:/config
-      - /media/storage:/media
+      - /mnt/jellyfin-media:/media
     ports:
       - "8096:8096"
     restart: unless-stopped
@@ -26,8 +26,8 @@ services:
       - TRANSMISSION_SCRIPT_TORRENT_DONE_FILENAME=/config/hooks/on-complete.sh
     volumes:
       - /home/mike/.config/transmission:/config
-      - /media/storage/downloads:/downloads
-      - /media/storage/watch:/watch
+      - /mnt/jellyfin-media/downloads:/downloads
+      - /mnt/jellyfin-media/watch:/watch
       - ./transmission:/config/hooks:ro
     ports:
       - "9091:9091"
@@ -47,8 +47,8 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/sonarr:/config
-      - /media/storage/TV:/tv                 # final TV library
-      - /media/storage/downloads:/downloads   # where new stuff lands
+      - /mnt/jellyfin-media/tv:/tv                 # final TV library
+      - /mnt/jellyfin-media/downloads:/downloads   # where new stuff lands
     ports:
       - "8989:8989"            # Sonarr web UI
     networks:
@@ -64,8 +64,8 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/radarr:/config
-      - /media/storage/Movies:/movies
-      - /media/storage/downloads:/downloads
+      - /mnt/jellyfin-media/movies:/movies
+      - /mnt/jellyfin-media/downloads:/downloads
     ports:
       - "7878:7878"
     networks:
@@ -96,7 +96,7 @@ services:
       - PGID=1000
       - TZ=America/Toronto
     volumes:
-      - /media/storage/downloads:/downloads   # same as Transmission folder
+      - /mnt/jellyfin-media/downloads:/downloads   # same as Transmission folder
       - /home/mike/.config/rdtclient:/config
     ports:
       - "6500:6500"  # optional; web UI
