@@ -15,6 +15,20 @@ services:
     networks:
       - media
 
+  navidrome:
+    image: deluan/navidrome:latest
+    user: 1000:1000 # should be owner of volumes
+    ports:
+      - "4533:4533"
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+    volumes:
+      - /home/mike/.config/navidrome:/data
+      - /mnt/jellyfin-media/music:/music:ro
+
   transmission:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
@@ -22,13 +36,10 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Toronto
-      - TRANSMISSION_SCRIPT_TORRENT_DONE_ENABLED=true
-      - TRANSMISSION_SCRIPT_TORRENT_DONE_FILENAME=/config/hooks/on-complete.sh
     volumes:
       - /home/mike/.config/transmission:/config
       - /mnt/jellyfin-media/downloads:/downloads
       - /mnt/jellyfin-media/watch:/watch
-      - ./transmission:/config/hooks:ro
     ports:
       - "9091:9091"
       - "51413:51413"
@@ -70,6 +81,21 @@ services:
       - "7878:7878"
     networks:
       - media
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /home/mike/.config/lidarr:/config
+      - /mnt/jellyfin-media/music:/music
+      - /mnt/jellyfin-media/downloads:/downloads #optional
+    ports:
+      - 8686:8686
+    restart: unless-stopped
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
