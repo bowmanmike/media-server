@@ -9,6 +9,8 @@ services:
     volumes:
       - /home/mike/.config/jellyfin:/config
       - /mnt/media:/media
+    devices:
+      - /dev/dri:/dev/dri
     ports:
       - "8096:8096"
     restart: unless-stopped
