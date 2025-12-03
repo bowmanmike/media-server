@@ -126,7 +126,7 @@ services:
       - PGID=1000
       - TZ=America/Toronto
     volumes:
-      - /mnt/jellyfin-media/downloads:/downloads   # same as Transmission folder
+      - /mnt/media/downloads:/downloads   # same as Transmission folder
       - /home/mike/.config/rdtclient:/data
     ports:
       - "6500:6500"  # optional; web UI
