@@ -8,7 +8,7 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/jellyfin:/config
-      - /mnt/jellyfin-media:/media
+      - /mnt/media:/media
     ports:
       - "8096:8096"
     restart: unless-stopped
@@ -27,7 +27,7 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/navidrome:/data
-      - /mnt/jellyfin-media/music:/music:ro
+      - /mnt/media/music:/music:ro
     networks:
       - media
 
@@ -40,8 +40,8 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/transmission:/config
-      - /mnt/jellyfin-media/downloads:/downloads
-      - /mnt/jellyfin-media/watch:/watch
+      - /mnt/media/downloads:/downloads
+      - /mnt/media/watch:/watch
     ports:
       - "9091:9091"
       - "51413:51413"
@@ -60,8 +60,8 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/sonarr:/config
-      - /mnt/jellyfin-media/tv:/tv                 # final TV library
-      - /mnt/jellyfin-media/downloads:/downloads   # where new stuff lands
+      - /mnt/media/tv:/tv                 # final TV library
+      - /mnt/media/downloads:/downloads   # where new stuff lands
     ports:
       - "8989:8989"            # Sonarr web UI
     networks:
@@ -77,8 +77,8 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/radarr:/config
-      - /mnt/jellyfin-media/movies:/movies
-      - /mnt/jellyfin-media/downloads:/downloads
+      - /mnt/media/movies:/movies
+      - /mnt/media/downloads:/downloads
     ports:
       - "7878:7878"
     networks:
@@ -93,8 +93,8 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /home/mike/.config/lidarr:/config
-      - /mnt/jellyfin-media/music:/music
-      - /mnt/jellyfin-media/downloads:/downloads #optional
+      - /mnt/media/music:/music
+      - /mnt/media/downloads:/downloads #optional
     ports:
       - 8686:8686
     restart: unless-stopped
