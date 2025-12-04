@@ -166,6 +166,80 @@ services:
     networks:
       - media
 
+  riven-frontend:
+    image: spoked/riven-frontend:latest
+    container_name: riven-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    tty: true
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+      - ORIGIN=http://media.local:3000 # Set to the frontend url. It's the url you will use to access the frontend. This is used by both auth & svelte csrf protection.
+      - BACKEND_URL=http://riven:8080
+      - BACKEND_API_KEY=my32charapikey1234567890abcdefgh
+    depends_on:
+      riven:
+        condition: service_healthy
+    volumes:
+      - /home/mike/.config/riven-frontend/data:/riven/data
+    networks:
+      - media
+
+  riven:
+    image: spoked/riven:latest
+    container_name: riven
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    tty: true
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+      - RIVEN_FORCE_ENV=true
+      - RIVEN_DATABASE_HOST=postgresql+psycopg2://postgres:postgres@riven-db/riven
+      - RIVEN_FILESYSTEM_MOUNT_PATH=/mount
+    healthcheck:
+      test: curl -s http://localhost:8080 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - /home/mike/.config/riven:/riven/data
+      - /mnt/media:/mount:rshared,z # Use your actual host mount path here
+    depends_on:
+      riven-db:
+        condition: service_healthy
+    networks:
+      - media
+
+  riven-db:
+    image: postgres:16.3-alpine3.20
+    container_name: riven-db
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: riven
+    volumes:
+      - ./riven-db:/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - media
+
 networks:
   media:
     driver: bridge
