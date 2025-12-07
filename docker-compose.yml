@@ -165,21 +165,6 @@ services:
     networks:
       - media
 
-  beets:
-    image: lscr.io/linuxserver/beets:latest
-    container_name: beets
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Toronto
-    volumes:
-      - /home/mike/.config/beets:/config
-      - /mnt/media/music:/music
-      - /mnt/media/music_incoming:/downloads
-    ports:
-      - 8337:8337
-    restart: unless-stopped
-
 networks:
   media:
     driver: bridge
