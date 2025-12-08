@@ -1,4 +1,18 @@
 services:
+  caddy:
+    container_name: caddy
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - /home/mike/.config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - /home/mike/.config/caddy:/etc/caddy
+    networks:
+      - media
+
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
