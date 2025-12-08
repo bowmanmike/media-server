@@ -15,6 +15,16 @@ services:
     networks:
       - media
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
+    networks:
+      - media   # or whatever network your caddy container is on
+
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
