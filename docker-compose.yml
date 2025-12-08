@@ -24,7 +24,7 @@ services:
       - /home/mike/.config/homepage:/app/config # Make sure your local config directory exists
       - /mnt/media:/media:ro
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: media.local:3000,media:3000,media.gate-rohu.ts.net:3000 # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts
+      HOMEPAGE_ALLOWED_HOSTS: media.local:3000,media:3000,media.gate-rohu.ts.net:3000,homepage.bowmanmike.com # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts
       PUID: 1000
       PGID: 1000
 
