@@ -37,6 +37,8 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: media.local:3000,media:3000,media.gate-rohu.ts.net:3000,homepage.bowmanmike.com # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts
       PUID: 1000
       PGID: 1000
+    networks:
+      - media
 
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
