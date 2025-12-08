@@ -31,6 +31,7 @@ services:
       - media
 
   navidrome:
+    container_name: navidrome
     image: deluan/navidrome:latest
     user: 1000:1000 # should be owner of volumes
     ports:
