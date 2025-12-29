@@ -203,7 +203,8 @@ services:
       - PGID=1000
       # - STGUIADDRESS=
     volumes:
-      - /home/mike/syncthing:/var/syncthing
+      - /home/mike/syncthing:/data
+      - /home/mike/.config/syncthing:/var/syncthing/config
     network_mode: host
     restart: unless-stopped
     ports:
