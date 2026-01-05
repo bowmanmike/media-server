@@ -70,7 +70,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Toronto
-      - ND_SESSIONTIMEOUT=120h
     volumes:
       - /home/mike/.config/navidrome:/data
       - /mnt/media/music:/music:ro
