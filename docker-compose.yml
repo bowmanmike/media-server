@@ -239,7 +239,7 @@ services:
     container_name: homelab
     restart: unless-stopped
     volumes:
-      - /home/mike/homelab:/data
+      - /home/mike/.config/homelab:/data
     ports:
       - "4000:4000"
     environment:
