@@ -245,6 +245,7 @@ services:
     environment:
       - SECRET_KEY_BASE=${HOMELAB_SECRET_KEY_BASE}
       - DATABASE_PATH=${HOMELAB_DB_PATH}
+      - PHX_HOST=${HOMELAB_PHX_HOST}
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:4000/health"]
       interval: 30s
