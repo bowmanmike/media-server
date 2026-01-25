@@ -240,7 +240,7 @@ services:
     restart: unless-stopped
     volumes:
       - /home/mike/.config/homelab/data:/data
-      - /var/run/reboot-required:/tmp/host/reboot-required:ro
+      - /var/run:/tmp/host/run:ro
       - /proc/uptime:/tmp/host/uptime:ro
     ports:
       - "4000:4000"
@@ -248,7 +248,7 @@ services:
       - SECRET_KEY_BASE=${HOMELAB_SECRET_KEY_BASE}
       - DATABASE_PATH=${HOMELAB_DB_PATH}
       - PHX_HOST=${HOMELAB_PHX_HOST}
-      - REBOOT_REQUIRED_PATH=/tmp/host/reboot-required
+      - REBOOT_REQUIRED_PATH=/tmp/host/run/reboot-required
       - UPTIME_PATH=/tmp/host/uptime
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:4000/health"]
