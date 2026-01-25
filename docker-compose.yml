@@ -242,6 +242,9 @@ services:
       - /home/mike/homelab:/data
     ports:
       - "4000:4000"
+    environment:
+      - SECRET_KEY_BASE=${HOMELAB_SECRET_KEY_BASE}
+      - DATABASE_PATH=${HOMELAB_DB_PATH}
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:4000/health"]
       interval: 30s
