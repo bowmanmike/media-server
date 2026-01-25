@@ -234,6 +234,21 @@ services:
       timeout: 10s
       retries: 3
 
+  homelab:
+    image: ghcri.io/bowmanmike/homelab:latest
+    container_name: homelab
+    restart: unless-stopped
+    volumes:
+      - /home/mike/homelab:/data
+    ports:
+      - "4000:4000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
 volumes:
   caddy_data:
   caddy_config:
