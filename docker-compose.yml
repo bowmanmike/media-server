@@ -235,7 +235,7 @@ services:
       retries: 3
 
   homelab:
-    image: ghcri.io/bowmanmike/homelab:latest
+    image: ghcr.io/bowmanmike/homelab:latest
     container_name: homelab
     restart: unless-stopped
     volumes:
