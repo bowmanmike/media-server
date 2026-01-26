@@ -251,9 +251,9 @@ services:
       - PHX_HOST=${HOMELAB_PHX_HOST}
       - REBOOT_REQUIRED_PATH=/tmp/host/run/reboot-required
       - UPTIME_PATH=/tmp/host/uptime
-      - DOCKER_SOCKET_PATH: /var/run/docker.sock
-      - DOCKER_API_BASE_URL: http:///v1.52
-      - DOCKER_API_HOST_HEADER: docker
+      - DOCKER_SOCKET_PATH=/var/run/docker.sock
+      - DOCKER_API_BASE_URL=http:///v1.52
+      - DOCKER_API_HOST_HEADER=docker
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:4000/health"]
       interval: 30s
