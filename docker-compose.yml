@@ -243,7 +243,7 @@ services:
       - /var/run:/tmp/host/run:ro
       - /proc/uptime:/tmp/host/uptime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /home/mike/media-server/docker-compose.yml:/var/run/docker-compose.yml:ro
+      - /home/mike/media-server/docker-compose.yml:/tmp/host/docker-compose.yml:ro
     ports:
       - "4000:4000"
     environment:
