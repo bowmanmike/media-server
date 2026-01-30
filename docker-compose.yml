@@ -243,6 +243,7 @@ services:
       - /var/run:/tmp/host/run:ro
       - /proc/uptime:/tmp/host/uptime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/mike/media-server/docker-compose.yml:/var/run/docker-compose.yml:ro
     ports:
       - "4000:4000"
     environment:
@@ -254,6 +255,7 @@ services:
       - DOCKER_SOCKET_PATH=/var/run/docker.sock
       - DOCKER_API_BASE_URL=http:///v1.52
       - DOCKER_API_HOST_HEADER=docker
+      - DOCKER_COMPOSE_FILE_PATH=${HOMELAB_DOCKER_COMPOSE_FILE_PATH}
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:4000/health"]
       interval: 30s
