@@ -70,6 +70,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Toronto
+      - ND_LASTFM_APIKEY=${LASTFM_API_KEY}
+      - ND_LASTFM_SECRET=${LASTFM_API_SECRET}
     volumes:
       - /home/mike/.config/navidrome:/data
       - /mnt/media/music:/music:ro
