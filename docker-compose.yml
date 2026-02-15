@@ -55,6 +55,7 @@ services:
       - /dev/dri:/dev/dri
     group_add:
       - "44"
+      - "993"
     ports:
       - "8096:8096"
     restart: unless-stopped
