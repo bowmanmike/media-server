@@ -53,6 +53,8 @@ services:
       - /mnt/media:/media
     devices:
       - /dev/dri:/dev/dri
+    group_add:
+      - "44"
     ports:
       - "8096:8096"
     restart: unless-stopped
