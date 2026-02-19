@@ -270,6 +270,23 @@ services:
     networks:
       - media
 
+  playlistgen:
+    image: ghcr.io/bowmanmike/playlistgen:latest
+    container_name: playlistgen
+    networks:
+      - media
+    volumes:
+      - /mnt/media/music:/library:ro
+      - /home/mike/.config/playlistgen/data:/data
+      - /mnt/media/music/playlists:/playlists
+    environment:
+      - NAVIDROME_URL=http://navidrome:4533
+      - NAVIDROME_USER=${PLAYLISTGEN_NAVIDROME_USER}
+      - NAVIDROME_PASSWORD=${PLAYLISTGEN_NAVIDROME_PASSWORD}
+      - OLLAMA_URL=http://ollama:11434
+    profiles:
+      - tools
+
 volumes:
   caddy_data:
   caddy_config:
