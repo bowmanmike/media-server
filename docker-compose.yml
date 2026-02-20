@@ -280,7 +280,7 @@ services:
       - /home/mike/.config/playlistgen/data:/data
       - /mnt/media/music/playlists:/playlists
     environment:
-      - NAVIDROME_URL=http://navidrome:4533
+      - NAVIDROME_URL=http://navidrome:4533/rest
       - NAVIDROME_USER=${PLAYLISTGEN_NAVIDROME_USER}
       - NAVIDROME_PASSWORD=${PLAYLISTGEN_NAVIDROME_PASSWORD}
       - OLLAMA_URL=http://ollama:11434
