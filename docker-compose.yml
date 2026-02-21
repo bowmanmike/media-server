@@ -277,7 +277,7 @@ services:
       - media
     volumes:
       - /mnt/media/music:/library:ro
-      - /home/mike/.config/playlistgen/data:/data
+      - /home/mike/.config/playlistgen/data:/home/playlistgen/data
       - /mnt/media/music/playlists:/playlists
     environment:
       - NAVIDROME_URL=http://navidrome:4533
