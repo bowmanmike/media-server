@@ -333,6 +333,9 @@ services:
       - redis
       - postgres
     restart: unless-stopped
+    networks:
+      - media
+
 
   # AudioMuse-AI RQ Worker service
   audiomuse-ai-worker:
@@ -355,6 +358,8 @@ services:
       - redis
       - postgres
     restart: unless-stopped
+    networks:
+      - media
 
 volumes:
   caddy_data:
