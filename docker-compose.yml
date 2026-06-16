@@ -273,6 +273,7 @@ services:
   playlistgen:
     image: ghcr.io/bowmanmike/playlistgen:latest
     container_name: playlistgen
+    restart: unless-stopped
     networks:
       - media
     volumes:
@@ -286,6 +287,17 @@ services:
       - OLLAMA_URL=http://ollama:11434
     profiles:
       - tools
+
+  gczlp:
+    image: ghcr.io/bowmanmike/gzclp:latest
+    container_name: gzclp
+    restart: unless-stopped
+    ports: "3000:3001"
+    volumes:
+      - /home/mike/.config/gzclp/data:/app/storage
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+
 
 volumes:
   caddy_data:
