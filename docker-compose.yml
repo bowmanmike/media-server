@@ -293,7 +293,7 @@ services:
     container_name: gzclp
     restart: unless-stopped
     ports:
-      - "3000:3001"
+      - "3001:3000"
     volumes:
       - /home/mike/.config/gzclp/data:/app/storage
     environment:
