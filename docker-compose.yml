@@ -288,15 +288,16 @@ services:
     profiles:
       - tools
 
-  gczlp:
+  gzclp:
     image: ghcr.io/bowmanmike/gzclp:latest
     container_name: gzclp
     restart: unless-stopped
-    ports: "3000:3001"
+    ports:
+      - "3000:3001"
     volumes:
       - /home/mike/.config/gzclp/data:/app/storage
     environment:
-      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - RAILS_MASTER_KEY=${GZCLP_RAILS_MASTER_KEY}
 
 
 volumes:
