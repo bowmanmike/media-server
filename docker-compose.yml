@@ -298,6 +298,8 @@ services:
       - /home/mike/.config/gzclp/data:/app/storage
     environment:
       - RAILS_MASTER_KEY=${GZCLP_RAILS_MASTER_KEY}
+    networks:
+      - media
 
 
 volumes:
