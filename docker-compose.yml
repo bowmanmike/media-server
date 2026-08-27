@@ -309,7 +309,8 @@ services:
       - PRIMARY=${NEBULA_SYNC_PRIMARY}
       - REPLICAS=${NEBULA_SYNC_REPLICAS}
       - FULL_SYNC=true
-      - RUN_GRAVITY=true
+      - CRON=*/15 * * * *
+    restart: unless-stopped
 
 
 volumes:
