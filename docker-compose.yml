@@ -267,6 +267,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    group_add:
+      - 983
     networks:
       - media
 
