@@ -97,6 +97,25 @@ services:
     networks:
       - media
 
+  gluetun:
+    image: qmcgaw/gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - "9091:9091"
+    environment:
+      - VPN_SERVICE_PROVIDER=protonvpn
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${GLUETUN_WIREGUARD_KEY}
+      - SERVER_COUNTRIES=Canada,United States
+      - VPN_PORT_FORWARDING=on
+      - PORT_FORWARD_ONLY=on
+    restart: unless-stopped
+    networks:
+      - media
+
   transmission:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
@@ -108,13 +127,15 @@ services:
       - /home/mike/.config/transmission:/config
       - /mnt/media/downloads:/downloads
       - /mnt/media/watch:/watch
-    ports:
-      - "9091:9091"
-      - "51413:51413"
-      - "51413:51413/udp"
+    # ports:
+      # - "9091:9091"
+      # - "51413:51413"
+      # - "51413:51413/udp"
     restart: unless-stopped
-    networks:
-      - media
+    network_mode: "service:gluetun"
+    depends_on:
+      gluetun:
+        condition: service_healthy
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
