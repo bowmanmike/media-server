@@ -142,7 +142,7 @@ services:
     user: "0:0"
     volumes:
       - ./gluetun:/gluetun:ro
-      - ./scripts/update-transmission-port.sh:/update-port.sh:ro
+      - ./scripts/transmission-port-update.sh:/update-port.sh:ro
     entrypoint: ["/bin/sh", "/update-port.sh"]
     depends_on:
       - gluetun
