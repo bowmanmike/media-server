@@ -99,6 +99,7 @@ services:
 
   gluetun:
     image: qmcgaw/gluetun
+    container_name: gluetun
     cap_add:
       - NET_ADMIN
     devices:
@@ -113,6 +114,8 @@ services:
       - VPN_PORT_FORWARDING=on
       - PORT_FORWARD_ONLY=on
     restart: unless-stopped
+    volumes:
+      - ./gluetun:/tmp/gluetun
     networks:
       - media
 
@@ -127,15 +130,26 @@ services:
       - /home/mike/.config/transmission:/config
       - /mnt/media/downloads:/downloads
       - /mnt/media/watch:/watch
-    # ports:
-      # - "9091:9091"
-      # - "51413:51413"
-      # - "51413:51413/udp"
     restart: unless-stopped
     network_mode: "service:gluetun"
     depends_on:
       gluetun:
         condition: service_healthy
+
+  transmission-port-sync:
+    image: curlimages/curl:latest
+    container_name: transmission-port-sync
+    user: "0:0"
+    volumes:
+      - ./gluetun:/gluetun:ro
+      - ./scripts/update-transmission-port.sh:/update-port.sh:ro
+    entrypoint: ["/bin/sh", "/update-port.sh"]
+    depends_on:
+      - gluetun
+      - transmission
+    restart: unless-stopped
+    networks:
+      - media
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
