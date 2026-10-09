@@ -161,8 +161,9 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/sonarr:/config
-      - /mnt/media/tv:/tv                 # final TV library
-      - /mnt/media/downloads:/downloads   # where new stuff lands
+      - /mnt/media:/media
+      # - /mnt/media/tv:/tv                 # final TV library
+      # - /mnt/media/downloads:/downloads   # where new stuff lands
     ports:
       - "8989:8989"            # Sonarr web UI
     networks:
@@ -178,8 +179,9 @@ services:
       - TZ=America/Toronto
     volumes:
       - /home/mike/.config/radarr:/config
-      - /mnt/media/movies:/movies
-      - /mnt/media/downloads:/downloads
+      - /mnt/media:/media
+      # - /mnt/media/movies:/movies
+      # - /mnt/media/downloads:/downloads
     ports:
       - "7878:7878"
     networks:
@@ -194,8 +196,9 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /home/mike/.config/lidarr:/config
-      - /mnt/media/music:/music
-      - /mnt/media/downloads:/downloads #optional
+      - /mnt/media:/media
+      # - /mnt/media/music:/music
+      # - /mnt/media/downloads:/downloads #optional
     ports:
       - 8686:8686
     restart: unless-stopped
@@ -217,22 +220,22 @@ services:
     networks:
       - media
 
-  bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
-    container_name: bazarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Toronto
-    volumes:
-      - /mnt/media/tv:/tv             # must match Sonarr/Radarr paths
-      - /mnt/media/movies:/movies
-      - /home/mike/.config/bazarr:/config
-    ports:
-      - "6767:6767"
-    restart: unless-stopped
-    networks:
-      - media
+  # bazarr:
+  #   image: lscr.io/linuxserver/bazarr:latest
+  #   container_name: bazarr
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/Toronto
+  #   volumes:
+  #     - /mnt/media/tv:/tv             # must match Sonarr/Radarr paths
+  #     - /mnt/media/movies:/movies
+  #     - /home/mike/.config/bazarr:/config
+  #   ports:
+  #     - "6767:6767"
+  #   restart: unless-stopped
+  #   networks:
+  #     - media
 
   rdtclient:
     image: ghcr.io/rogerfar/rdtclient:latest
