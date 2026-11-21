@@ -1,7 +1,10 @@
 services:
   caddy:
     container_name: caddy
-    image: caddy:latest
+    image: homelab-caddy:local
+    build:
+      context: .
+      dockerfile: docker/caddy/Dockerfile
     restart: unless-stopped
     ports:
       - "80:80"
@@ -9,21 +12,12 @@ services:
       - "443:443/udp"
     volumes:
       - /home/mike/.config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - /home/mike/.config/caddy:/etc/caddy
       - caddy_data:/data
       - caddy_config:/config
+    environment:
+      CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN:?Cloudflare token required}
     networks:
       - media
-
-  # cloudflared:
-  #   image: cloudflare/cloudflared:latest
-  #   container_name: cloudflared
-  #   restart: unless-stopped
-  #   command: tunnel run
-  #   environment:
-  #     - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
-  #   networks:
-  #     - media   # or whatever network your caddy container is on
 
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
@@ -217,40 +211,6 @@ services:
       - /home/mike/.config/prowlarr:/config
     ports:
       - "9696:9696"
-    networks:
-      - media
-
-  # bazarr:
-  #   image: lscr.io/linuxserver/bazarr:latest
-  #   container_name: bazarr
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=America/Toronto
-  #   volumes:
-  #     - /mnt/media/tv:/tv             # must match Sonarr/Radarr paths
-  #     - /mnt/media/movies:/movies
-  #     - /home/mike/.config/bazarr:/config
-  #   ports:
-  #     - "6767:6767"
-  #   restart: unless-stopped
-  #   networks:
-  #     - media
-
-  rdtclient:
-    image: ghcr.io/rogerfar/rdtclient:latest
-    container_name: rdtclient
-    restart: unless-stopped
-    environment:
-      - RD_API_KEY=<YOUR_REAL_DEBRID_API_KEY>
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Toronto
-    volumes:
-      - /mnt/media/downloads:/downloads   # same as Transmission folder
-      - /home/mike/.config/rdtclient:/data
-    ports:
-      - "6500:6500"  # optional; web UI
     networks:
       - media
 
