@@ -311,10 +311,22 @@ services:
       - CRON=*/15 * * * *
     restart: unless-stopped
 
+  groovelist:
+    image: ghcr.io/bowmanmike/groovelist:latest   # or pin a sha-<short sha> tag
+    restart: unless-stopped
+    env_file: groovelist.env                      # RAILS_MASTER_KEY=<contents of config/master.key>
+    environment:
+      SOLID_QUEUE_IN_PUMA: "true"                 # run background jobs inside the web process
+    volumes:
+      - groovelist_storage:/rails/storage         # all SQLite databases live here
+    ports:
+      - "3000:80"
+
 
 volumes:
   caddy_data:
   caddy_config:
+  groovelist_storage:
 
 networks:
   media:
