@@ -322,6 +322,8 @@ services:
       - groovelist_storage:/rails/storage         # all SQLite databases live here
     ports:
       - "3002:3000"
+    networks:
+      - media
 
 
 volumes:
