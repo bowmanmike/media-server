@@ -12,8 +12,8 @@ services:
       - "443:443/udp"
     volumes:
       - /home/mike/.config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
+      - ${HOME}/.config/caddy/data:/data
+      - ${HOME}/.config/caddy/config:/config
     environment:
       CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN:?Cloudflare token required}
     networks:
@@ -319,17 +319,11 @@ services:
     environment:
       SOLID_QUEUE_IN_PUMA: "true"                 # run background jobs inside the web process
     volumes:
-      - groovelist_storage:/rails/storage         # all SQLite databases live here
+      - ${HOME}/.config/groovelist:/rails/storage
     ports:
       - "3002:3000"
     networks:
       - media
-
-
-volumes:
-  caddy_data:
-  caddy_config:
-  groovelist_storage:
 
 networks:
   media:
